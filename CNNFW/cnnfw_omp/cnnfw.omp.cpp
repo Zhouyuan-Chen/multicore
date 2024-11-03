@@ -2,9 +2,9 @@
 #include <omp.h>
 
 using namespace std;
-const int N = 10000;     // 图像的高和宽
-const int n = 3;         // kernel的高和宽
-const int K = N - n + 1; // output的高和宽
+const int N = 10000;     // image size NxN
+const int n = 3;         // kernel size KSxKS
+const int K = N - n + 1; // output size KxK
 const int thread_num = 16;
 int image[N][N];
 int kernel[n][n];
@@ -13,7 +13,10 @@ int output[K][K];
 int main()
 {
     // int thread_count=strtol(argv[1],NULL,10);
+    printf("image size:%dx%d, kernel size:%dx%d, thread_number:%d\n", N, N, n, n, thread_num);
+
     srand(time(NULL));
+    printf("create images...\n");
     for (int oh = 0; oh < N; oh++)
     {
         for (int ow = 0; ow < N; ow++)
@@ -22,6 +25,7 @@ int main()
         }
     }
 
+    printf("create kernels...\n");
     for (int oh = 0; oh < n; oh++)
     {
         for (int ow = 0; ow < n; ow++)
@@ -32,6 +36,7 @@ int main()
 
     // int Num=0;
 
+    printf("compute convolution...\n");
 #pragma omp parallel for num_threads(thread_num)
     for (int oh = 0; oh < K; oh++)
     {
@@ -60,7 +65,7 @@ int main()
     //     cout << endl;
     // }
 
-    // cout<<"一共执行了多少次"<<Num;
+    printf("completed!\n");
 
     return 0;
 }
