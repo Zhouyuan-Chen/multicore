@@ -1,0 +1,4 @@
+./MC/mc_rust/target/*
+./MC/mc_rust/.gitignore
+./CNNFW/cnnfw/target/
+./CNNFW/cnnfw/.gitignore
