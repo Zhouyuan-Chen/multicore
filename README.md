@@ -6,5 +6,7 @@ Members: Changyue Su, Zhouyuan Chen, Qian Zhang, Hao Li
 
 Algorithm:
 
-* MC: Monte Carlo
-* CNNFW: CNN Foward
+- MC: Monte Carlo
+- CNNFW: CNN Foward
+- MS: Merge Sort
+- PS: Prefix Sum

@@ -7,7 +7,7 @@ const int N = 100000000;   // array size
 vector<int> arr(N);        // array
 vector<int> prefix_sum(N); // array
 
-void prefix_scan(vector<int> &arr, vector<int> &prefix_sum, int n, int thread_count)
+void prefix_scan(vector<int> &prefix_sum, int n, int thread_count)
 {
     for (int step = 1; step < n; step *= 2)
     {
@@ -38,15 +38,14 @@ int main(int argc, char *argv[])
     int n_threads = atoi(argv[1]);
     printf("array is size of %d\n", N);
     srand(time(NULL));
-    printf("generate array\n");
+    printf("generating array\n");
     for (int i = 0; i < N; ++i)
     {
         arr[i] = rand() % 2;
         prefix_sum[i] = arr[i];
     }
-
     // print_array(arr);
-    prefix_scan(arr, prefix_sum, prefix_sum.size(), n_threads);
+    prefix_scan(prefix_sum, prefix_sum.size(), n_threads);
     // print_array(prefix_sum);
     printf("compute prefix sum compelete\n");
     return 0;
