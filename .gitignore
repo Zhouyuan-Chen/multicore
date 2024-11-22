@@ -1,2 +1,4 @@
 CNNFW/cnnfw_rust/cnnfw/*
 MC/mc_rust/mc/*
+nbody/nbody_rust/nbody/*
+.DS_Store
