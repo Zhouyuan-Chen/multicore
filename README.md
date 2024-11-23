@@ -10,3 +10,5 @@ Algorithm:
 - CNNFW: CNN Foward
 - MS: Merge Sort
 - PS: Prefix Sum
+- nbody: N-Body problem
+- knn: k-Nearest Neighbors
