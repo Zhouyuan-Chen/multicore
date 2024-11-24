@@ -3,3 +3,4 @@ MC/mc_rust/mc/*
 nbody/nbody_rust/nbody/*
 knn/knn_rust/knn/*
 .DS_Store
+target/
