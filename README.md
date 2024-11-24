@@ -12,3 +12,5 @@ Algorithm:
 - PS: Prefix Sum
 - nbody: N-Body problem
 - knn: k-Nearest Neighbors
+- reduce: Reduce problem
+- mm: Matrix Multiplication
