@@ -3,6 +3,7 @@ use rayon::ThreadPoolBuilder;
 use std::cmp::Ordering;
 use std::env;
 use std::process;
+use std::time::Instant;
 
 #[derive(Clone, Debug)]
 struct DataPoint {
@@ -77,6 +78,7 @@ fn main() {
             }
         };
     }
+    println!("num_train: {}, num_test: {}, num_threads: {}", num_train, num_test, num_threads);
 
     let custom_pool = match ThreadPoolBuilder::new().num_threads(num_threads).build() {
         Ok(pool) => pool,
@@ -112,8 +114,8 @@ fn main() {
         .collect();
 
     // println!("Datasets initialized.");
-    // println!("Performing k-NN classification...");
 
+    let start_time = Instant::now();
     let predicted_labels: Vec<i32> = custom_pool.install(|| {
         testing
             .par_iter()
@@ -122,8 +124,9 @@ fn main() {
     });
 
     // println!("k-NN classification completed.");
-    // println!("Displaying first 10 predictions:");
-
+    let duration = start_time.elapsed();
+    println!("Time taken: {:.6} seconds", duration.as_secs_f64());
+   
     // Output the first 10 predicted labels
     for (i, label) in predicted_labels.iter().take(10).enumerate() {
         println!("Test Point {}: Predicted Label = {}", i, label);

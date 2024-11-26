@@ -3,6 +3,9 @@
 #include <math.h>
 #include <omp.h>
 
+// to compile:
+// time gcc -fopenmp -o nbody_omp nbody.c -lm
+
 typedef struct {
     double x, y, z;
     double vx, vy, vz;
@@ -17,6 +20,7 @@ int main(int argc, char *argv[]) {
     if(argc >= 3) steps = atoi(argv[2]);
     int num_threads = 4;
     if(argc >= 3) num_threads = atoi(argv[3]);
+    printf("N = %d, steps = %d, num_threads = %d\n", N, steps, num_threads);
 
     double G = 6.67430e-11;
     double dt = 0.01;
@@ -33,7 +37,8 @@ int main(int argc, char *argv[]) {
         particles[i].vx = particles[i].vy = particles[i].vz = 0.0;
         particles[i].mass = 1.0e20;
     }
-
+    double tstart = 0.0, tend=0.0, ttaken;
+    tstart = omp_get_wtime();
     
     for(int step = 0; step < steps; step++) {
       
@@ -67,7 +72,8 @@ int main(int argc, char *argv[]) {
         }
 
     }
-
+    ttaken = omp_get_wtime() - tstart;
+    printf("Time take for the main part: %f\n", ttaken);
     free(particles);
     return 0;
 }

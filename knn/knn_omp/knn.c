@@ -3,6 +3,8 @@
 #include <math.h>
 #include <omp.h>
 
+// time gcc -fopenmp -o knn_omp knn.c -lm
+
 typedef struct {
     double* features;
     int label; 
@@ -33,6 +35,9 @@ int main(int argc, char *argv[]) {
         num_test = atoi(argv[2]);
         num_threads = atoi(argv[3]);
     }
+    printf("num_train = %d, num_test = %d, num_threads = %d\n", num_train, num_test, num_threads);
+
+    omp_set_num_threads(num_threads);
     
     int dimensions = 50;   // Number of features
     int k = 5;             // Number of neighbors
@@ -58,6 +63,9 @@ int main(int argc, char *argv[]) {
 
     int* predicted_labels = malloc(num_test * sizeof(int));
 
+    double tstart = 0.0, tend=0.0, ttaken;
+    tstart = omp_get_wtime();
+
     #pragma omp parallel for schedule(dynamic)
     for(int i = 0; i < num_test; i++) {
         double* distances = malloc(num_train * sizeof(double));
@@ -76,6 +84,9 @@ int main(int argc, char *argv[]) {
         predicted_labels[i] = (votes[0] > votes[1]) ? 0 : 1;
         free(distances);
     }
+
+    ttaken = omp_get_wtime() - tstart;
+    printf("Time take for the main part: %f\n", ttaken);
 
     // Output 
     for(int i = 0; i < 10; i++) {

@@ -3,6 +3,7 @@ use std::f64;
 use rand::Rng;
 use std::env;
 use std::process;
+use std::time::Instant;
 
 #[derive(Clone, Copy)]
 struct Particle {
@@ -15,16 +16,6 @@ struct Particle {
     mass: f64,
 }
 
-fn configure_rayons_thread_pool(threads: usize) {
-    rayon::ThreadPoolBuilder::new()
-        .num_threads(threads)
-        .build_global()
-        .unwrap_or_else(|e| {
-            eprintln!("Error configuring Rayon thread pool: {}", e);
-            process::exit(1);
-        });
-}
-
 fn main() {
     let args: Vec<String> = env::args().collect();
     let mut n: usize = 10000; 
@@ -35,6 +26,7 @@ fn main() {
         steps = args[2].parse().expect("Invalid number of steps");
         threads = args[3].parse().expect("Invalid number of threads");
     }
+    println!("Number of particles: {}, Number of steps: {}, Number of threads: {}", n, steps, threads);
     let custom_pool = match rayon::ThreadPoolBuilder::new().num_threads(threads).build() {
         Ok(pool) => pool,
         Err(e) => {
@@ -61,13 +53,17 @@ fn main() {
         }
     }).collect();
 
+    let start_time = Instant::now();
+
     // Run simulation within the custom thread pool
     custom_pool.install(|| run_simulation(particles, steps, g, dt, softening));
+    let duration = start_time.elapsed();
+    println!("Time taken: {:.6} seconds", duration.as_secs_f64());
 }
 
 fn run_simulation(particles: Vec<Particle>, steps: usize, g: f64, dt: f64, softening: f64) {
     let mut particles = particles; 
-    for step in 0..steps {
+    for _step in 0..steps {
         let accelerations: Vec<(f64, f64, f64)> = particles
             .par_iter()
             .enumerate()
@@ -111,5 +107,5 @@ fn run_simulation(particles: Vec<Particle>, steps: usize, g: f64, dt: f64, softe
         //     println!("Completed step {}/{}", step + 1, steps);
         // }
     }
-    println!("Simulation Completed");
+    // println!("Simulation Completed");
 }
