@@ -85,10 +85,8 @@ int main(int argc, char *argv[]) {
     print_matrix(C, M, K);
     */
 
-    // 输出计算时间
     printf("Time taken: %f seconds\n", time_taken);
 
-    // 释放内存
     free(A);
     free(B);
     free(C);
