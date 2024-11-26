@@ -5,8 +5,8 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo init ps
 cd ps/
 # compile and run
-cp ../rust_files/ps.rs ./src/main.rs
-cp ../rust_files/Cargo.toml ./Cargo.toml
+cp ../rust_files/ps.rs src/main.rs
+cp ../rust_files/Cargo.toml Cargo.toml
 cargo build --release
-time ./target/release/ps 4
+time ./target/release/ps 100000000 4
 ```
