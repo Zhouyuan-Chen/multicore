@@ -4,6 +4,8 @@ Multicore course project 2024 fall
 
 Members: Changyue Su, Zhouyuan Chen, Qian Zhang, Hao Li
 
+GitHub Project: https://github.com/Zhouyuan-Chen/multicore
+
 ## Algorithm:
 
 - MC: Monte Carlo
