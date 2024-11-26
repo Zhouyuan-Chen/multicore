@@ -16,6 +16,7 @@ Members: Changyue Su, Zhouyuan Chen, Qian Zhang, Hao Li
 - mm: Matrix Multiplication
 
 ## To compile and run:
+Each program has a readme file under the folder, here are two examples:
 
 **nbody openmp:**
 - go to file: ```cd nbody/nbody_omp/```
@@ -83,8 +84,4 @@ knn/                       - knn algorithm
     │   ├── knn.rs
     │   └── Cargo.toml
     └── readme.md          - README for compile and run rust files
-
-
-
-
 ```
